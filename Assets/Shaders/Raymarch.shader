@@ -4,9 +4,12 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
 
-        _BackgroundColor("Background Color", Color) = (0,0,0,0)
 
         _SDFColor("SDF Color", Color) = (1,1,1,1)
+		_SDF2Color("SDF Color", Color) = (0,0,0,0)
+
+		_CoreScale("Core Scale", Float) = 0.5
+
         _RimColor("Rim Color", Color) = (1,1,1,1)
 		_RimThreshold("Rim Threshold", Float) = 10.0
 
@@ -25,7 +28,7 @@
         _LightIntensity("Light Intensity", Float) = 10.0
 
         _Test("Test", Float) = 1.0
-        [Toggle(DEBUG_MODE)] _Debug("Debug Mode",  Float) = 0
+        [KeywordEnum(DEBUG, CORE, SHELL)] _Mode("Debug Mode",  Float) = 0
     }
     SubShader
     {
@@ -37,7 +40,7 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma multi_compile __ DEBUG_MODE
+            #pragma multi_compile _MODE_DEBUG _MODE_CORE _MODE_SHELL
 			#pragma multi_compile_fwdbase
 
             #include "UnityCG.cginc"
@@ -64,10 +67,10 @@
 
 			float4 _MainTex_ST, _RayOrigin, _CameraTarget;
 			float4  _CameraPosition, _CameraOrientation;
-			float4 _BackgroundColor, _SDFColor, _RimColor;
+			float4 _SDF2Color, _SDFColor, _RimColor;
 
 			float4 _JelloPosition, _JelloRotation, _JelloScale, _JelloShape;
-			float _JelloRoundFactor;
+			float _JelloRoundFactor, _CoreScale;
 			float4 _LightPos;
 			float _Test;
             float _BoundDistance, _LightIntensity, _RimThreshold;
@@ -164,6 +167,46 @@
             };
 
 
+
+			class CoreShapeMap : iSDF
+			{
+				Transform t;
+				float2 Evaluate(float3 pos)
+				{
+					SphereSDF sphere;
+					//TorusSDF torus;
+					RectangleSDF cube;
+					PyramidSDF pyramid;
+
+					pyramid.h = 0.7f;
+					pyramid.t = t;
+					pyramid.hue = 90;
+					cube.t = t;
+					cube.b = 0.3 * _CoreScale;
+					cube.hue = 70;
+
+					//Shape parameters
+					sphere.radius = .5 * _CoreScale;
+
+					sphere.t = t;
+					sphere.hue = 60.0;
+
+					float2 d = float2(_BoundDistance, 60);
+
+					float2 d2 = sphere.Evaluate(pos) - _JelloRoundFactor;
+					float2 d3 = cube.Evaluate(pos) - _JelloRoundFactor;
+					float2 d4 = pyramid.Evaluate(pos + float3(0, 0.4, 0)) - _JelloRoundFactor;
+
+					float d6 = _JelloShape.x * d2 + _JelloShape.y * d3 + _JelloShape.z * d4;
+
+					//float2 d5 = lerp(lerp(d2, d3, abs(sin(_Time.x * 40))), d4, abs(sin(_Time.x * 60)));
+					d = sdfUnion(d, d6);
+
+					return d;
+				}
+
+			};
+
 			fixed4 frag(v2f i) : SV_Target
 			{
 				// Directional light direction
@@ -197,12 +240,21 @@
                 ShapeMap shapeMap;
                 shapeMap.t = t;
 
+				CoreShapeMap coreMap;
+				coreMap.t = t;
+
                 //Raymarch for depth and color
                 float2 d = Raymarch(shapeMap, _CameraPosition, p, _BoundDistance);
-				float3 shape_color = HSV2RGB(float3(d.y / 360.0, 1.0, 1.0));
+				//float3 shape_color = HSV2RGB(float3(d.y / 360.0, 1.0, 1.0));
+				float3 shape_color = _SDFColor; // HSV2RGB(float3(d.y / 360.0, 1.0, 1.0));
+
+				float2 core_d = Raymarch(coreMap, _CameraPosition, p, _BoundDistance);
+				float3 core_color = _SDF2Color;
 				
 				// Draw SDF shape if less than bounding volume
                 float draw = d.x < _BoundDistance;
+
+				float draw_core = core_d.x < _BoundDistance;
 
 				// sdf pixel world position
                 float4 world_pos = float4((_CameraPosition + d.x * p).xyz, 1.0f);
@@ -239,14 +291,14 @@
 
                 // Color  + Lighting + Rim lighting
                 float3 color = ( shape_color ) * (ilum_color);
+                core_color = ( core_color ) * (ilum_color);
                 color = (rim_intensity ? _RimColor : color) + specular_intensity * ilum_color;
-
 
 
 				// Scene Image
 				float4 unity_cam = tex2D(_MainTex, i.uv);
 
-#ifdef DEBUG_MODE //Draw Both scene and shapes
+#ifdef _MODE_DEBUG //Draw Both scene and shapes
 
                 //return float4((unity_cam.xyz + (max(normal, 0) * draw)) / (1+draw), 1);
                 return float4((unity_cam.xyz + (max(color, 0) * draw)) / (1+draw), 1);
@@ -256,12 +308,24 @@
                 //return float4((unity_cam.xyz + (color * draw)) / (1+draw), 1);
                 //return float4(unity_cam.xyz * draw, 1);
 #endif
+
+#ifdef _MODE_CORE
+				// Draw closest between scene and shape
+				//return draw_core;
+				float4 shell_color = float4((unity_cam.xyz + (max(color, 0) * draw)) / (1 + draw), 1);
+				float4 core_col = (max(draw_core * float4(core_color, 1), 0));
+				float4 col = lerp(shell_color, core_col, draw_core);
+				return lerp(unity_cam, col, d.x < depth.x);
+				
+#endif
+
+#ifdef _MODE_SHELL
 				// Draw closest between scene and shape
 				if (d.x < depth.x)
-					return float4(color, 1) * draw;
+					return float4(color, 1) * draw ;
 				else
 					return unity_cam;
-
+#endif
 
                 //return d.x;
             }
