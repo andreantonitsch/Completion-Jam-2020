@@ -39,6 +39,17 @@ public class PlayerController : MonoBehaviour
 
         Player = shapeList[currentShape];
         PlayerRig = Player.GetComponent<Rigidbody>();
+
+        if(currentShape == (int)SHAPE.CUBE)
+        {
+            MovementController.instance.forceMult = 35;
+
+        }else if (currentShape == (int)SHAPE.SPHERE)
+        {
+            MovementController.instance.forceMult = 50;
+
+        }
+
     }
 
     // Update is called once per frame
