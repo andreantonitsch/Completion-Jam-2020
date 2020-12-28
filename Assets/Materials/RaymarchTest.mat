@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: RaymarchTest
   m_Shader: {fileID: 4800000, guid: da533218e2bf2b442bc3e9558a1aa270, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _MODE_CORE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -58,6 +58,7 @@ Material:
     m_Floats:
     - _BoundDistance: 10000
     - _BumpScale: 1
+    - _CoreScale: 0.5
     - _Cutoff: 0.5
     - _Debug: 0
     - _DetailNormalMapScale: 1
@@ -68,7 +69,7 @@ Material:
     - _JelloRoundFactor: 0.2
     - _LightIntensity: 0.8
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PlaneDistance: 1
@@ -97,5 +98,6 @@ Material:
     - _RayDirection: {r: 1.68, g: 2.09, b: 0.12, a: 0}
     - _RayOrigin: {r: 0, g: 0, b: -8.43, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SDF2Color: {r: 0.24313723, g: 0.8784314, b: 0.30221272, a: 0}
     - _SDFColor: {r: 0, g: 0.97254896, b: 1, a: 1}
   m_BuildTextureStacks: []
