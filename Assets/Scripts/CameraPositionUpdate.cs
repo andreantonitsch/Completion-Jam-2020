@@ -16,10 +16,15 @@ public class CameraPositionUpdate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Shader.SetGlobalVector("_CameraPosition", transform.position);
+        //Debug.Log(transform.position);
+        Shader.SetGlobalVector("_CameraPosition",Camera.main.transform.position);
         //Change to quaternion math
-        Shader.SetGlobalVector("_CameraOrientation", transform.rotation.eulerAngles);
-        Shader.SetGlobalVector("_CameraTarget", Target.position);
+        Shader.SetGlobalVector("_CameraOrientation", Camera.main.transform.rotation.eulerAngles);
+        //Shader.SetGlobalVector("_CameraTarget", Target.position);
+
+        var t = Camera.main.transform.forward;
+        Shader.SetGlobalVector("_CameraTarget", t);
+
 
 
     }

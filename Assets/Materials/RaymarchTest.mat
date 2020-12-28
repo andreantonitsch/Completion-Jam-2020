@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: RaymarchTest
   m_Shader: {fileID: 4800000, guid: da533218e2bf2b442bc3e9558a1aa270, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: DEBUG_MODE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -59,7 +59,7 @@ Material:
     - _BoundDistance: 1000
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _Debug: 0
+    - _Debug: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
@@ -87,11 +87,11 @@ Material:
     - _DonutRotation: {r: 200, g: 50.13, b: 20, a: 1}
     - _DonutScale: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FOV: {r: 0.6, g: 0.6, b: 1, a: 1}
-    - _JelloPosition: {r: 0, g: 0.636, b: 0, a: 0}
+    - _FOV: {r: 0.4, g: 0.4, b: 0.6, a: 1}
+    - _JelloPosition: {r: 0, g: 0, b: 0, a: 0}
     - _JelloRotation: {r: -0, g: 0, b: 0, a: 0}
     - _JelloScale: {r: 1, g: 1, b: 1, a: 0}
-    - _JelloShape: {r: 0.00000040728233, g: 0.9999996, b: 0, a: 0}
+    - _JelloShape: {r: 1, g: 0, b: 0, a: 0}
     - _LightPos: {r: -20.6, g: 34.7, b: -12.8, a: 0}
     - _PlanePosition: {r: -2.1, g: 0.5, b: -0.72, a: 1}
     - _RayDirection: {r: 1.68, g: 2.09, b: 0.12, a: 0}
