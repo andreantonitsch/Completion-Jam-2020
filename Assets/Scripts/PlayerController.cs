@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 
     public bool morphedShape { get; private set; }
 
+    private RaymarcherController raymarcherController;
+    private RaymarchShapeUpdater shapeUpdater;
 
 
     // Start is called before the first frame update
@@ -36,6 +38,9 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        raymarcherController = GetComponent<RaymarcherController>();
+        shapeUpdater = GetComponent<RaymarchShapeUpdater>();
 
         Player = shapeList[currentShape];
         PlayerRig = Player.GetComponent<Rigidbody>();
@@ -67,7 +72,7 @@ public class PlayerController : MonoBehaviour
             {
                 shapeList[currentShape].SetActive(false);
                 currentShape = (int) SHAPE.SPHERE;
-
+                raymarcherController.ChangeShape(RaymarcherController.Shape.Sphere);
                 MovementController.instance.forceMult = 50;
 
             }
@@ -80,7 +85,8 @@ public class PlayerController : MonoBehaviour
                 if (shapeList[currentShape])
                 {
                     MovementController.instance.forceMult = 35;
-                   
+                    raymarcherController.ChangeShape(RaymarcherController.Shape.Rectangle);
+
                 }
                 else
                 {
@@ -98,7 +104,8 @@ public class PlayerController : MonoBehaviour
                 if (shapeList[currentShape])
                 {
                     MovementController.instance.forceMult = 35;
-                    
+                    raymarcherController.ChangeShape(RaymarcherController.Shape.Pyramid);
+
                 }
                 else
                 {
@@ -175,6 +182,8 @@ public class PlayerController : MonoBehaviour
         shapeList[currentShape].SetActive(true);
         Player.transform.rotation = lastRot;
         Player.transform.position = lastPos;
+        shapeUpdater.t = Player.transform;
+        
         PlayerRig = Player.GetComponent<Rigidbody>();
         PlayerRig.velocity = Player.transform.InverseTransformDirection(lastVel);
         PlayerRig.angularVelocity = Player.transform.InverseTransformDirection(lastAngVel);

@@ -130,7 +130,7 @@
                 float2 Evaluate(float3 pos)
                 {
                     SphereSDF sphere;
-                    //TorusSDF torus;
+                    TorusSDF torus;
 					RectangleSDF cube;
 					PyramidSDF pyramid;
 
@@ -140,6 +140,10 @@
 					cube.t = t;
 					cube.b = 0.3;
 					cube.hue = 70;
+
+                    torus.t = t;
+                    torus.radius = float2(1, 0.5);
+                    torus.hue = 70;
 
                     //Shape parameters
                     sphere.radius = .5;
@@ -152,8 +156,8 @@
 					float2 d2 = sphere.Evaluate(pos) - _JelloRoundFactor;
 					float2 d3 = cube.Evaluate(pos) - _JelloRoundFactor;
 					float2 d4 = pyramid.Evaluate(pos + float3(0,0.4,0)) - _JelloRoundFactor;
-					
-					float d6 = _JelloShape.x * d2 + _JelloShape.y * d3 + _JelloShape.z * d4;
+					float2 d5 = torus.Evaluate(pos) - _JelloRoundFactor;
+					float d6 = _JelloShape.x * d2 + _JelloShape.y * d3 + _JelloShape.z * d5;
 
 					//float2 d5 = lerp(lerp(d2, d3, abs(sin(_Time.x * 40))), d4, abs(sin(_Time.x * 60)));
 					d = sdfUnion(d, d6);

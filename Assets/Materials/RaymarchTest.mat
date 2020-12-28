@@ -56,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BoundDistance: 1000
+    - _BoundDistance: 10000
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _Debug: 0
@@ -65,8 +65,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _JelloRoundFactor: 0
-    - _LightIntensity: 1
+    - _JelloRoundFactor: 0.2
+    - _LightIntensity: 0.8
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -76,7 +76,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Test: 5
+    - _Test: 200
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
@@ -87,11 +87,11 @@ Material:
     - _DonutRotation: {r: 200, g: 50.13, b: 20, a: 1}
     - _DonutScale: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FOV: {r: 0.3666, g: 0.366, b: 0.3667, a: 0.3667}
-    - _JelloPosition: {r: 115.32056, g: 0.5, b: -37.19497, a: 0}
-    - _JelloRotation: {r: 30.613428, g: 66.578575, b: 210.56696, a: 0}
+    - _FOV: {r: 0.3666, g: 0.3666, b: 0.3667, a: 0.3667}
+    - _JelloPosition: {r: 11.225418, g: 0.5000003, b: -3.572364, a: 0}
+    - _JelloRotation: {r: 330.54422, g: 100.24415, b: 348.7475, a: 0}
     - _JelloScale: {r: 1, g: 1, b: 1, a: 0}
-    - _JelloShape: {r: 1, g: 0, b: 0, a: 0}
+    - _JelloShape: {r: 1.0000001, g: -0.00000013744784, b: 0, a: 0}
     - _LightPos: {r: -20.6, g: 34.7, b: -12.8, a: 0}
     - _PlanePosition: {r: -2.1, g: 0.5, b: -0.72, a: 1}
     - _RayDirection: {r: 1.68, g: 2.09, b: 0.12, a: 0}
