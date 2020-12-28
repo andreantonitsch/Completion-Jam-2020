@@ -7,17 +7,12 @@ public class InputManager : MonoBehaviour
 
     public static InputManager instance;
 
-    [HideInInspector]
+    
     public bool pressW = false;
-    [HideInInspector]
     public bool pressS = false;
-    [HideInInspector]
     public bool pressA = false;
-    [HideInInspector]
     public bool pressD = false;
-    [HideInInspector]
     public bool pressSpaceBar = false;
-    [HideInInspector]
     public bool pressE;
 
 
