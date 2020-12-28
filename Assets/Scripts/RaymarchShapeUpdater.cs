@@ -10,7 +10,7 @@ public class RaymarchShapeUpdater : MonoBehaviour
 
     
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         raymarch_material.SetVector("_JelloPosition", t.position);
         raymarch_material.SetVector("_JelloRotation", t.rotation.eulerAngles);

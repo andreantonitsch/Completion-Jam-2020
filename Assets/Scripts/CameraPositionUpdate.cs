@@ -14,7 +14,7 @@ public class CameraPositionUpdate : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //Debug.Log(transform.position);
         Shader.SetGlobalVector("_CameraPosition",Camera.main.transform.position);
