@@ -53,9 +53,9 @@ Transform CreateTransform(float4 scale, float4 orientation, float4 translation)
 	float4x4 _orientation = 0.0f;
 	float4x4 _translation = 0.0f;
 
-	_translation[0] = float4(1, 0, 0, translation.x);
-	_translation[1] = float4(0, 1, 0, translation.y);
-	_translation[2] = float4(0, 0, 1, translation.z);
+	_translation[0] = float4(1, 0, 0, -translation.x);
+	_translation[1] = float4(0, 1, 0, -translation.y);
+	_translation[2] = float4(0, 0, 1, -translation.z);
 	_translation[3] = float4(0, 0, 0, 1);
 
 	_scale[0] = float4(1/scale.x, 0, 0, 0);

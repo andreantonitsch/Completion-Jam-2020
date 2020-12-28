@@ -182,9 +182,10 @@
                 ///// Raymarch Camera Parameters
                 float3 up = float3(0.0, 1.0, 0.0);
                 float3 tgt = _CameraTarget;
-                float3 dir = normalize(tgt - _CameraPosition);
+                //float3 dir = normalize(tgt - _CameraPosition);
+                float3 dir = normalize(tgt);
                 float3 cam_right = normalize(cross(dir, up ));
-                float3 cam_up = -normalize(cross(cam_right, dir));
+                float3 cam_up = normalize(cross(cam_right, dir));
                 float3 p = normalize(cam_right * screen_pos.x + cam_up * screen_pos.y + dir);
                 
 
@@ -248,10 +249,12 @@
 #ifdef DEBUG_MODE //Draw Both scene and shapes
 
                 //return float4((unity_cam.xyz + (max(normal, 0) * draw)) / (1+draw), 1);
-                //return float4((unity_cam.xyz + (max(color, 0) * draw)) / (1+draw), 1);
-
-                return float4((unity_cam.xyz + (color * draw)) / (1+draw), 1);
-                return float4(unity_cam.xyz * draw, 1);
+                return float4((unity_cam.xyz + (max(color, 0) * draw)) / (1+draw), 1);
+				//return unity_cam + float4(color, 1);
+				//return unity_cam + float4(color, 1);
+				//return (float4(color, 1) * draw) + unity_cam.xyzw;
+                //return float4((unity_cam.xyz + (color * draw)) / (1+draw), 1);
+                //return float4(unity_cam.xyz * draw, 1);
 #endif
 				// Draw closest between scene and shape
 				if (d.x < depth.x)
