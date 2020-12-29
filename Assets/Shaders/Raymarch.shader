@@ -223,8 +223,8 @@
 				float4 light_dir = normalize(float4(_WorldSpaceLightPos0));
 
 				//depth texture depth
-				float4 depth = tex2D(_CameraDepthTexture, i.uv).r;
-				depth = LinearEyeDepth(depth);
+				float4 depth_tex = tex2D(_CameraDepthTexture, i.uv);
+				float depth = LinearEyeDepth(depth_tex);
 
 				// Screenspace uv
                 float2 uv = ((i.uv - .5f) *2) * _ScreenParams.xy / _ScreenParams.y;
@@ -261,6 +261,8 @@
 				float2 core_d = Raymarch(coreMap, _CameraPosition, p, _BoundDistance);
 				float3 core_color = _SDF2Color;
 				
+				//return (min(depth, core_d.x)) / _BoundDistance;
+
 				// Draw SDF shape if less than bounding volume
                 float draw = d.x < _BoundDistance;
 
@@ -310,7 +312,6 @@
 				float4 shifted_uv = float4(float2(ddx(d.x), ddy(d.x)) * _JelloDifraction + i.uv.xy, 0,0);
 				float4 shifted_cam =  tex2D(_MainTex, shifted_uv);
 
-				//return glitter > _Glitter;
 #ifdef _MODE_DEBUG //Draw Both scene and shapes
 
                 //return float4((unity_cam.xyz + (max(normal, 0) * draw)) / (1+draw), 1);
