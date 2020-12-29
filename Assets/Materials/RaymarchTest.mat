@@ -93,11 +93,11 @@ Material:
     - _DonutScale: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FOV: {r: 0.3666, g: 0.3666, b: 0.3667, a: 0.3667}
-    - _JelloPosition: {r: 2.5975943, g: 0.5000004, b: -19.486479, a: 0}
-    - _JelloRotation: {r: 6.016212, g: 5.5102644, b: 4.9700155, a: 0}
+    - _JelloPosition: {r: -16.493372, g: 0.4999994, b: 52.695076, a: 0}
+    - _JelloRotation: {r: 5.651674, g: 2.255733, b: 2.6679974, a: 0}
     - _JelloRoundFactor: {r: 0, g: 0.2, b: 0.2, a: 0}
     - _JelloScale: {r: 1, g: 1, b: 1, a: 0}
-    - _JelloShape: {r: 1.0377421, g: -0.037742097, b: 0, a: 0}
+    - _JelloShape: {r: 1.0273479, g: -0.027347906, b: 0, a: 0}
     - _LightPos: {r: -20.6, g: 34.7, b: -12.8, a: 0}
     - _PlanePosition: {r: -2.1, g: 0.5, b: -0.72, a: 1}
     - _RayDirection: {r: 1.68, g: 2.09, b: 0.12, a: 0}

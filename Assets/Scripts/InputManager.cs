@@ -13,6 +13,8 @@ public class InputManager : MonoBehaviour
     public bool press3 = false;
 
     public bool pressW = false;
+    public float v_axis = 0.0f;
+    public float h_axis = 0.0f;
     public bool pressS = false;
     public bool pressA = false;
     public bool pressD = false;
@@ -70,7 +72,7 @@ public class InputManager : MonoBehaviour
 
         #endregion
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))
         {
             pressSpaceBar = true;
         }
@@ -86,41 +88,42 @@ public class InputManager : MonoBehaviour
             pressE = false;
         }
 
-       
 
 
-        if (Input.GetKeyDown("w"))
+        v_axis = Input.GetAxis("Vertical");
+        h_axis = Input.GetAxis("Horizontal");
+        if (v_axis > 0.1f)
         {
             pressW = true;
         }
-        else if (Input.GetKeyUp("w"))
+        else if (v_axis <= 0.1f)
         {
             pressW = false;
         }
 
-        if (Input.GetKeyDown("s"))
+        if (v_axis < -0.1f)
         {
             pressS = true;
         }
-        else if (Input.GetKeyUp("s"))
+        else if (v_axis >= -0.1f)
         {
             pressS = false;
         }
 
-        if (Input.GetKeyDown("a"))
+        if (h_axis < -0.1f)
         {
             pressA = true;
         }
-        else if (Input.GetKeyUp("a"))
+        else if (h_axis >= -0.1f)
         {
             pressA = false;
         }
 
-        if (Input.GetKeyDown("d"))
+        if (h_axis > 0.1f)
         {
             pressD = true;
         }
-        else if (Input.GetKeyUp("d"))
+        else if (h_axis <= 0.1f)
         {
             pressD = false;
         }
