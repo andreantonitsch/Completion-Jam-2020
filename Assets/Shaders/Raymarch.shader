@@ -2,32 +2,45 @@
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        [HideInInspector]_MainTex ("Texture", 2D) = "white" {}
 
-
+		[Header(Color Lighting)]
+		[Space(5)]
         _SDFColor("SDF Color", Color) = (1,1,1,1)
 		_SDF2Color("SDF Color", Color) = (0,0,0,0)
-
-		_CoreScale("Core Scale", Float) = 0.5
-
-        _RimColor("Rim Color", Color) = (1,1,1,1)
+		_RimColor("Rim Color", Color) = (1,1,1,1)
 		_RimThreshold("Rim Threshold", Float) = 10.0
+		_LightIntensity("Light Intensity", Float) = 10.0
+		_Specular("Specular Roughness", Float) = 1.0
 
-        _BoundDistance("BoundDistance", Float) = 10.0
+
+		[Space(15)]
+		[Header(Marching Parameters)]
+		[Space(5)]
+        _BoundDistance("BoundDistance", Float) = 10000.0
         _FOV("FoV", Vector) = (60, 60, 0, 0)
 
-		_JelloShape("Jello Shape", Vector) = (1,0,0,0)
 
+		[Space(15)]
+		[Header(Jello Properties)]
+		[Space(5)]
+		_JelloShape("Jello Shape", Vector) = (1,0,0,0)
         _JelloPosition("Jello Position", Vector) = (0,0,0,0)
         _JelloRotation("Jello Rotation", Vector) = (0,0,0,0)
         _JelloScale("Jello Scale", Vector) = (1,1,1,0)
+		_JelloDifraction("JelloDifraction", Float) = 1.0
 
-		_JelloRoundFactor("JellowRoundFactor", Float) = 0.2
+		[Space(15)]
+		[Header(Shape Sizes)]
+		[Space(5)]
+		_ShapeSizes("Jello Shape Sizes", Vector) = (0.5,0.3,0.7,1)
+		_CoreScale("Core Scale", Float) = 0.5
+		_JelloRoundFactor("JellowRoundFactor", Vector) = (0.2,0.2,0.2,0)
+		_CoreRoundFactor("CoreRoundFactor", Vector) = (0.05,0.05,0.05,0.05)
 
-        _LightPos("Light Position", Vector) = (5, 10, 10, 0)
-        _LightIntensity("Light Intensity", Float) = 10.0
-
-        _Test("Test", Float) = 1.0
+		[Space(15)]
+		[Header(Debug Mode)]
+		[Space(5)]
         [KeywordEnum(DEBUG, CORE, SHELL)] _Mode("Debug Mode",  Float) = 0
     }
     SubShader
@@ -63,6 +76,7 @@
             };
 
             sampler2D _MainTex;
+            sampler2D _NoiseTex;
 			sampler2D _CameraDepthTexture;
 
 			float4 _MainTex_ST, _RayOrigin, _CameraTarget;
@@ -70,9 +84,12 @@
 			float4 _SDF2Color, _SDFColor, _RimColor;
 
 			float4 _JelloPosition, _JelloRotation, _JelloScale, _JelloShape;
-			float _JelloRoundFactor, _CoreScale;
-			float4 _LightPos;
-			float _Test;
+			float4 _ShapeSizes;
+
+			float4 _JelloRoundFactor, _CoreRoundFactor;
+				
+			float  _CoreScale, _JelloDifraction;
+			float _Specular;
             float _BoundDistance, _LightIntensity, _RimThreshold;
             float3 _FOV;
 
@@ -126,11 +143,11 @@
 					RectangleSDF cube;
 					PyramidSDF pyramid;
 
-					pyramid.h = 0.7f;
+					pyramid.h = _ShapeSizes.z;
 					pyramid.t = t;
 					pyramid.hue = 90;
 					cube.t = t;
-					cube.b = 0.3;
+					cube.b = _ShapeSizes.y;
 					cube.hue = 70;
 
                     torus.t = t;
@@ -138,17 +155,17 @@
                     torus.hue = 70;
 
                     //Shape parameters
-                    sphere.radius = .5;
+                    sphere.radius = _ShapeSizes.x;
 
 					sphere.t = t;
 					sphere.hue = 60.0;
 
                     float2 d = float2(_BoundDistance, 60);
 
-					float2 d2 = sphere.Evaluate(pos) - _JelloRoundFactor;
-					float2 d3 = cube.Evaluate(pos) - _JelloRoundFactor;
-					float2 d4 = pyramid.Evaluate(pos + float3(0,0.4,0)) - _JelloRoundFactor;
-					float2 d5 = torus.Evaluate(pos) - _JelloRoundFactor;
+					float2 d2 = sphere.Evaluate(pos) - _JelloRoundFactor.x;
+					float2 d3 = cube.Evaluate(pos) - _JelloRoundFactor.y;
+					float2 d4 = pyramid.Evaluate(pos + float3(0,0.4,0)) - _JelloRoundFactor.z;
+					float2 d5 = torus.Evaluate(pos) - _JelloRoundFactor.w;
 					float d6 = _JelloShape.x * d2 + _JelloShape.y * d3 + _JelloShape.z * d5;
 
 					//float2 d5 = lerp(lerp(d2, d3, abs(sin(_Time.x * 40))), d4, abs(sin(_Time.x * 60)));
@@ -186,9 +203,9 @@
 
 					float2 d = float2(_BoundDistance, 60);
 
-					float2 d2 = sphere.Evaluate(pos) - _JelloRoundFactor;
-					float2 d3 = cube.Evaluate(pos) - _JelloRoundFactor;
-					float2 d4 = pyramid.Evaluate(pos + float3(0, 0.4, 0)) - _JelloRoundFactor;
+					float2 d2 = sphere.Evaluate(pos) - _CoreRoundFactor.x;
+					float2 d3 = cube.Evaluate(pos) -_CoreRoundFactor.y;
+					float2 d4 = pyramid.Evaluate(pos + float3(0, 0.4, 0)) -_CoreRoundFactor.z;
 
 					float d6 = _JelloShape.x * d2 + _JelloShape.y * d3 + _JelloShape.z * d4;
 
@@ -213,7 +230,6 @@
                 float2 uv = ((i.uv - .5f) *2) * _ScreenParams.xy / _ScreenParams.y;
                 uv.x *= -1;
                 float2 screen_pos = uv * _FOV;
-
 
                 ///// Raymarch Camera Parameters
                 float3 up = float3(0.0, 1.0, 0.0);
@@ -259,7 +275,6 @@
 
                 
                 //Jello Solid Lambertian lighting
-                //float3 light_vec = _LightPos.xyz - world_pos.xyz;
 				float3 light_vec = light_dir;
                 float light_sqdist = dot(light_vec, light_vec);
                 float3 light_direction = normalize(light_vec);
@@ -282,7 +297,7 @@
 				// TODO Add Jello Specular Lighting
 				float3 b_p_h = normalize(light_dir - p);
 				float b_p = dot(b_p_h, normal);
-				float specular_intensity = pow(b_p,_Test) * draw;
+				float specular_intensity = pow(b_p,_Specular) * draw;
 
                 // Color  + Lighting + Rim lighting
                 float3 color = ( shape_color ) * (ilum_color);
@@ -290,15 +305,16 @@
                 color = (rim_intensity ? _RimColor : color) + saturate(specular_intensity * ilum_color);
 
 
-				//float4 ambient_color = float4(half3(unity_SHAr.w, unity_SHAg.w, unity_SHAb.w),1);
-				//return unity_AmbientSky;
 				// Scene Image
 				float4 unity_cam = tex2D(_MainTex, i.uv);
+				float4 shifted_uv = float4(float2(ddx(d.x), ddy(d.x)) * _JelloDifraction + i.uv.xy, 0,0);
+				float4 shifted_cam =  tex2D(_MainTex, shifted_uv);
 
+				//return glitter > _Glitter;
 #ifdef _MODE_DEBUG //Draw Both scene and shapes
 
                 //return float4((unity_cam.xyz + (max(normal, 0) * draw)) / (1+draw), 1);
-                return float4((unity_cam.xyz + (max(color, 0) * draw)) / (1+draw), 1) ;
+                return float4((unity_cam.xyz + (max(color, 0) * draw)) / (1+draw), 1);
 				//return unity_cam + float4(color, 1);
 				//return unity_cam + float4(color, 1);
 				//return (float4(color, 1) * draw) + unity_cam.xyzw;
@@ -309,7 +325,7 @@
 #ifdef _MODE_CORE
 				// Draw closest between scene and shape
 				//return draw_core;
-				float4 shell_color = float4((unity_cam.xyz + (max(color, 0) * draw)) / (1 + draw), 1) ;
+				float4 shell_color = float4((shifted_cam.xyz + (max(color, 0) * draw)) / (1 + draw), 1);
 				float4 core_col = (max(draw_core * float4(core_color, 1), 0))  ;
 				float4 col = lerp(shell_color, core_col, draw_core);
 				return lerp(unity_cam, col, d.x < depth.x);
