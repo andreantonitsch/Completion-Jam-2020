@@ -76,7 +76,8 @@
             float _BoundDistance, _LightIntensity, _RimThreshold;
             float3 _FOV;
 
-            
+			float4x4 _TRS;
+
             float remap_range(float x, float2 old_range, float2 new_range) {
                 x -= old_range.x;
                 x /= (old_range.y - old_range.x);
@@ -96,18 +97,6 @@
 			}
 
 
-            float4x4 Cam2World(float3 camera_orientation, float3 camera_position)
-            {
-                float4x4 _translation;
-                _translation[0] = float4(1, 0, 0, camera_position.x);
-                _translation[1] = float4(0, 1, 0, camera_position.y);
-                _translation[2] = float4(0, 0, 1, camera_position.z);
-                _translation[3] = float4(0, 0, 0, 1);
-
-                float4x4 _rotation = CompositeRotation(camera_orientation);
-
-                return mul(_translation, _rotation);
-            }
 
             v2f vert (appdata v)
             {
@@ -238,7 +227,8 @@
 
                 //Jello transform
                 //Transform t = CreateTransform(_JelloScale, _JelloRotation * float4((_Time.x) / 14.0, (_Time.x % 1000.0) / 10.0, (_Time.x % 1000.0) / 18.0, 1.0), _JelloPosition);
-                Transform t = CreateTransform(_JelloScale, _JelloRotation, _JelloPosition);
+                Transform t = CreateTransform(_JelloScale, (_JelloRotation.xyzw), _JelloPosition);
+				//Transform t = _TRS;
 
 				// Jello SDF parameters
                 ShapeMap shapeMap;
@@ -277,7 +267,8 @@
                 light_intensity *= draw ? dot(light_direction, normal) : 0.0f ;
 				
 				// Light intensity and color at the point
-                float3 ilum_color = _LightColor0 * light_intensity;
+				float4 ambient_color = unity_AmbientSky;
+                float3 ilum_color = saturate(saturate(_LightColor0 * light_intensity) + unity_AmbientSky);
 
                 //Jello rim lighting
                 float view_normal = dot(p, normal);
@@ -296,16 +287,18 @@
                 // Color  + Lighting + Rim lighting
                 float3 color = ( shape_color ) * (ilum_color);
                 core_color = ( core_color ) * (ilum_color);
-                color = (rim_intensity ? _RimColor : color) + specular_intensity * ilum_color;
+                color = (rim_intensity ? _RimColor : color) + saturate(specular_intensity * ilum_color);
 
 
+				//float4 ambient_color = float4(half3(unity_SHAr.w, unity_SHAg.w, unity_SHAb.w),1);
+				//return unity_AmbientSky;
 				// Scene Image
 				float4 unity_cam = tex2D(_MainTex, i.uv);
 
 #ifdef _MODE_DEBUG //Draw Both scene and shapes
 
                 //return float4((unity_cam.xyz + (max(normal, 0) * draw)) / (1+draw), 1);
-                return float4((unity_cam.xyz + (max(color, 0) * draw)) / (1+draw), 1);
+                return float4((unity_cam.xyz + (max(color, 0) * draw)) / (1+draw), 1) ;
 				//return unity_cam + float4(color, 1);
 				//return unity_cam + float4(color, 1);
 				//return (float4(color, 1) * draw) + unity_cam.xyzw;
@@ -316,8 +309,8 @@
 #ifdef _MODE_CORE
 				// Draw closest between scene and shape
 				//return draw_core;
-				float4 shell_color = float4((unity_cam.xyz + (max(color, 0) * draw)) / (1 + draw), 1);
-				float4 core_col = (max(draw_core * float4(core_color, 1), 0));
+				float4 shell_color = float4((unity_cam.xyz + (max(color, 0) * draw)) / (1 + draw), 1) ;
+				float4 core_col = (max(draw_core * float4(core_color, 1), 0))  ;
 				float4 col = lerp(shell_color, core_col, draw_core);
 				return lerp(unity_cam, col, d.x < depth.x);
 				

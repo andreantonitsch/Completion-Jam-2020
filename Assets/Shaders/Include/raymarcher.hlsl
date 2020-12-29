@@ -3,7 +3,7 @@
 
 typedef float4x4 Transform;
 #define IdentityTransform float4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
-
+#define PI 3.14159265359
 float4x4 RotationX(float theta) 
 {
 	float4x4 mat = 0.0f;
@@ -39,11 +39,15 @@ float4x4 RotationZ(float theta)
 
 float4x4 CompositeRotation(float3 rotations) 
 {
-	float4x4 mx = RotationX(rotations.x);
-	float4x4 my = RotationY(rotations.y);
-	float4x4 mz = RotationZ(rotations.z);
+	float xr = rotations.x;
+	float yr = rotations.y;
+	float zr = rotations.z;
 
-	return mul(mx, mul(my, mz));
+	float4x4 mx = RotationX(-xr);
+	float4x4 my = RotationY(yr);
+	float4x4 mz = RotationZ(-zr);
+
+	return mul(mz, mul(mx, my));
 	
 }
 

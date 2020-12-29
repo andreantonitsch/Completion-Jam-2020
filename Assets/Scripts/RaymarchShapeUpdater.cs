@@ -13,8 +13,16 @@ public class RaymarchShapeUpdater : MonoBehaviour
     void FixedUpdate()
     {
         raymarch_material.SetVector("_JelloPosition", t.position);
-        raymarch_material.SetVector("_JelloRotation", t.rotation.eulerAngles);
+        raymarch_material.SetVector("_JelloRotation", t.rotation.eulerAngles * Mathf.Deg2Rad);
         raymarch_material.SetVector("_JelloScale", t.localScale);
+
+        Quaternion rotQ = t.localRotation;
+        Vector3 sclV = t.localScale;
+
+        Matrix4x4 mat = Matrix4x4.TRS(t.position, rotQ, sclV);
+        //GetComponent<Renderer>().sharedMaterial.SetMatrix("_UVWTransform", mat);
+
+        raymarch_material.SetMatrix("_TRS", mat);
 
     }
 }
