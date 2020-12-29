@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    public void LoadGameScene()
-    {
 
-    }
     public void LoadIntroScene()
     {
+        SceneManager.LoadScene("Intro");
+    }
 
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene("Credits");
     }
 
 }
