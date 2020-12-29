@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        raymarcherController.ChangeShape(RaymarcherController.Shape.Sphere);
+
     }
 
     // Update is called once per frame

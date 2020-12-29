@@ -100,6 +100,6 @@ Material:
     - _RayDirection: {r: 1.68, g: 2.09, b: 0.12, a: 0}
     - _RayOrigin: {r: 0, g: 0, b: -8.43, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SDF2Color: {r: 0.24313723, g: 0.8784314, b: 0.30221272, a: 0}
-    - _SDFColor: {r: 0, g: 0.97254896, b: 1, a: 1}
+    - _SDF2Color: {r: 0.06926012, g: 1, b: 0, a: 0}
+    - _SDFColor: {r: 0.2784474, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []
