@@ -12,7 +12,7 @@ public class ShapeMorpher : MonoBehaviour
         if (other.tag != "Player") return;
 
         PlayerController.instance.shapeList[(int)shapeType] = shape;
-
+        PlayerController.instance.ChangeShape((int)shapeType);
     }
 
 }
