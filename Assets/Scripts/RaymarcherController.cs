@@ -15,7 +15,7 @@ public class RaymarcherController : MonoBehaviour
     }
 
     
-    public int ShapeChangeSteps = 30;
+    public float ShapeChangeSteps = 0.5f;
     public int ShapeBounciness = 2;
     public Shape current_shape;
     public Shape old_shape;
@@ -34,7 +34,7 @@ public class RaymarcherController : MonoBehaviour
     //Jank
     public void UpdateShape(float t, Shape target_shape, Shape previous_shape)
     {
-        float p = SincCurve(t, ShapeBounciness);
+        float p = SincCurve(t, ShapeBounciness) * 1.7f;
         Vector4 new_shape_v = Vector4.zero;
 
         switch (target_shape)
@@ -67,16 +67,16 @@ public class RaymarcherController : MonoBehaviour
 
     public  IEnumerator ShapeRoutine()
     {
-        float t = 0.0f;
-        for (int i = 0; i < ShapeChangeSteps; i++)
+        float timer = 0.0f;
+        while(timer < ShapeChangeSteps)
         {
-            t += 1.0f / ShapeChangeSteps;
+            timer += Time.deltaTime;
+            float t = timer / ShapeChangeSteps;
             UpdateShape(t, current_shape, old_shape);
             dirty_shape = true;
             yield return null;
         }
-        t = 1.0f;
-        UpdateShape(t, current_shape, old_shape);
+        UpdateShape(1.0f, current_shape, old_shape);
     }
 
     public void ChangeShape(Shape s)
