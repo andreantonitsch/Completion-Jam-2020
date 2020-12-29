@@ -14,6 +14,8 @@ public class RaymarcherController : MonoBehaviour
         Pyramid
     }
 
+    public Color[] CoreColors;
+    public Color[] ShellColors;
     
     public float ShapeChangeSteps = 0.5f;
     public int ShapeBounciness = 2;
@@ -96,6 +98,18 @@ public class RaymarcherController : MonoBehaviour
         if (dirty_shape)
         {
             raymarch_material.SetVector("_JelloShape", ShapeVector);
+            Color core_col = Color.black;
+            Color shell_col = Color.black;
+
+            for (int i = 0; i < CoreColors.Length; i++)
+            {
+                core_col = core_col + CoreColors[i] * ShapeVector[i];
+                shell_col = shell_col + ShellColors[i] * ShapeVector[i];
+            }
+
+            raymarch_material.SetVector("_SDF2Color", core_col);
+            raymarch_material.SetVector("_SDFColor", shell_col);
+
             dirty_shape = false;
 
         }
