@@ -6,9 +6,6 @@ using UnityEngine;
 public enum SHAPE { SPHERE, CUBE, PYRAMID }
 public class PlayerController : MonoBehaviour
 {
-
-
-
     public static PlayerController instance;
 
     public List<GameObject> shapeList;
