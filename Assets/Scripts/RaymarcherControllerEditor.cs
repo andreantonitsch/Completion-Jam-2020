@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(RaymarcherController))]
 public class RaymarcherControllerEditor : Editor
 {
@@ -22,3 +23,4 @@ public class RaymarcherControllerEditor : Editor
 
 
 }
+#endif

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
+#if  UNITY_EDITOR
 [CustomEditor(typeof(Gradient2RampTexture))]
 public class Gradient2RampTextureEditor : Editor
 {
@@ -25,3 +25,4 @@ public class Gradient2RampTextureEditor : Editor
 
 
 }
+#endif

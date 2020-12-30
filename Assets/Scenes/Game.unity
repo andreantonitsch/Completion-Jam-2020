@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.45091236, g: 0.50080574, b: 0.57452226, a: 1}
+  m_IndirectSpecularColor: {r: 0.3091483, g: 0.38916057, b: 0.5397879, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3418,7 +3418,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254641564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5263753, y: 8.260279, z: -77.5}
+  m_LocalPosition: {x: 1.4509256, y: 8.260279, z: -77.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1177257205}
@@ -10270,7 +10270,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5263753, y: 8.260279, z: -77.5}
+  m_LocalPosition: {x: 1.4509256, y: 8.260279, z: -77.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 971920767}
@@ -11180,7 +11180,7 @@ MonoBehaviour:
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
     m_InvertInput: 1
-    m_MinValue: -70
+    m_MinValue: 5
     m_MaxValue: 70
     m_Wrap: 0
     m_Recentering:
@@ -13055,6 +13055,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79649603d131fc4fafad48aee343d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoreColors:
+  - {r: 0.6037736, g: 0.14524741, b: 0.14524741, a: 0}
+  - {r: 0.17475079, g: 0.26490715, b: 0.7264151, a: 0}
+  ShellColors:
+  - {r: 0.8196079, g: 0.17254902, b: 0.17254902, a: 0}
+  - {r: 0.023584902, g: 0.059171885, b: 1, a: 0}
   ShapeChangeSteps: 2
   ShapeBounciness: 3
   current_shape: 1
