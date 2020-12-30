@@ -93,17 +93,17 @@ Material:
     - _DonutScale: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FOV: {r: 0.3666, g: 0.3666, b: 0.3667, a: 0.3667}
-    - _JelloPosition: {r: -69.49045, g: 31.360252, b: 101.769745, a: 0}
-    - _JelloRotation: {r: 6.2652283, g: 0.2935824, b: 1.566319, a: 0}
+    - _JelloPosition: {r: -102.5919, g: 8.099612, b: -121.50026, a: 0}
+    - _JelloRotation: {r: 6.1028347, g: 2.6014433, b: 4.487261, a: 0}
     - _JelloRoundFactor: {r: 0, g: 0.2, b: 0.2, a: 0}
     - _JelloScale: {r: 1, g: 1, b: 1, a: 0}
-    - _JelloShape: {r: -0.00030499633, g: 1.0003049, b: 0, a: 0}
+    - _JelloShape: {r: 1.0018718, g: -0.0018718477, b: 0, a: 0}
     - _LightPos: {r: -20.6, g: 34.7, b: -12.8, a: 0}
     - _PlanePosition: {r: -2.1, g: 0.5, b: -0.72, a: 1}
     - _RayDirection: {r: 1.68, g: 2.09, b: 0.12, a: 0}
     - _RayOrigin: {r: 0, g: 0, b: -8.43, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SDF2Color: {r: 0.20378761, g: 0.14120518, b: 0.6118867, a: 1}
-    - _SDFColor: {r: 0.26663798, g: 0.17256336, b: 0.35692254, a: 2}
+    - _SDF2Color: {r: 0.6439594, g: 0.04688265, b: 0.21101598, a: 1}
+    - _SDFColor: {r: 0.36096048, g: 0.12540212, b: 0.16041729, a: 2}
     - _ShapeSizes: {r: 0.5, g: 0.3, b: 0.7, a: 1}
   m_BuildTextureStacks: []
