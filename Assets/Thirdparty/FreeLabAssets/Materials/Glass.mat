@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RaymarchTest
-  m_Shader: {fileID: 4800000, guid: da533218e2bf2b442bc3e9558a1aa270, type: 3}
-  m_ShaderKeywords: _MODE_CORE
+  m_Name: Glass
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -56,54 +56,23 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BoundDistance: 10000
     - _BumpScale: 1
-    - _CoreRoundFactor: -0.06
-    - _CoreScale: 0.45
     - _Cutoff: 0.5
-    - _Debug: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 1
     - _GlossyReflections: 1
-    - _JelloDifraction: 1
-    - _JelloRoundFactor: 0.3
-    - _LightIntensity: 0.8
     - _Metallic: 0
-    - _Mode: 1
+    - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PlaneDistance: 1
-    - _RimThreshold: 0.22
     - _SmoothnessTextureChannel: 0
-    - _Specular: 200
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Test: 50
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
-    - _CameraTarget: {r: -5.33, g: 0, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CoreRoundFactor: {r: 0.05, g: 0.05, b: 0.05, a: 0.05}
-    - _DonutPosition: {r: 0, g: 0, b: 0, a: 0}
-    - _DonutRotation: {r: 200, g: 50.13, b: 20, a: 1}
-    - _DonutScale: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FOV: {r: 0.3666, g: 0.3666, b: 0.3667, a: 0.3667}
-    - _JelloPosition: {r: -69.49045, g: 31.360252, b: 101.769745, a: 0}
-    - _JelloRotation: {r: 6.2652283, g: 0.2935824, b: 1.566319, a: 0}
-    - _JelloRoundFactor: {r: 0, g: 0.2, b: 0.2, a: 0}
-    - _JelloScale: {r: 1, g: 1, b: 1, a: 0}
-    - _JelloShape: {r: -0.00030499633, g: 1.0003049, b: 0, a: 0}
-    - _LightPos: {r: -20.6, g: 34.7, b: -12.8, a: 0}
-    - _PlanePosition: {r: -2.1, g: 0.5, b: -0.72, a: 1}
-    - _RayDirection: {r: 1.68, g: 2.09, b: 0.12, a: 0}
-    - _RayOrigin: {r: 0, g: 0, b: -8.43, a: 1}
-    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SDF2Color: {r: 0.20378761, g: 0.14120518, b: 0.6118867, a: 1}
-    - _SDFColor: {r: 0.26663798, g: 0.17256336, b: 0.35692254, a: 2}
-    - _ShapeSizes: {r: 0.5, g: 0.3, b: 0.7, a: 1}
   m_BuildTextureStacks: []
