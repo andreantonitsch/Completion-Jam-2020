@@ -49,6 +49,7 @@ public class MovementController : MonoBehaviour
 
                 PlayerController.instance.PlayerRig.AddTorque(Camera.main.transform.forward * forceMult);
                 PlayerController.instance.PlayerRig.AddForce(Vector3.Scale(-Camera.main.transform.right, new Vector3(1, 0, 1)) * forceMult * 0.25f);
+                return;
             }
             else
             if (InputManager.instance.pressD)
@@ -58,13 +59,15 @@ public class MovementController : MonoBehaviour
 
                 PlayerController.instance.PlayerRig.AddTorque(-Camera.main.transform.forward * forceMult);
                 PlayerController.instance.PlayerRig.AddForce(Vector3.Scale(Camera.main.transform.right, new Vector3(1, 0, 1)) * forceMult * 0.25f);
+                return;
             }
             else
             {
                 PlayerController.instance.PlayerRig.AddTorque(Camera.main.transform.right * forceMult);
                 PlayerController.instance.PlayerRig.AddForce(Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)) * forceMult);
+                return;
             }
-            return;
+            
         }
 
         if (InputManager.instance.pressS)
@@ -88,7 +91,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                PlayerController.instance.PlayerRig.AddTorque(Camera.main.transform.right * forceMult);
+                PlayerController.instance.PlayerRig.AddTorque(-Camera.main.transform.right * forceMult);
                 PlayerController.instance.PlayerRig.AddForce(Vector3.Scale(-Camera.main.transform.forward, new Vector3(1, 0, 1)) * forceMult);
             }
 
