@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Raymarch"
+﻿Shader "Unlit/RaymarchForObjects"
 {
     Properties
     {
@@ -19,7 +19,6 @@
 		[Space(5)]
         _BoundDistance("BoundDistance", Float) = 10000.0
         _FOV("FoV", Vector) = (60, 60, 0, 0)
-	    //_CameraTarget("Camera Target", Vector) = (0,0,0,0)
 
 
 		[Space(15)]
@@ -48,7 +47,7 @@
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
-
+		GrabPass { "_BackgroundTexture" }
         Pass
         {
             CGPROGRAM
@@ -74,11 +73,14 @@
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
+				float4 screenPos : TEXCOORD1;
+				float4 grabPos : TEXCOORD2;
             };
 
             sampler2D _MainTex;
             sampler2D _NoiseTex;
 			sampler2D _CameraDepthTexture;
+			sampler2D _BackgroundTexture;
 
 			float4 _MainTex_ST, _RayOrigin, _CameraTarget;
 			float4  _CameraPosition, _CameraOrientation;
@@ -121,6 +123,8 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex); 
+				o.screenPos = ComputeScreenPos(o.vertex);
+				o.grabPos = ComputeGrabScreenPos(o.vertex);
 				
                 return o;
             }
@@ -220,17 +224,30 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
+
 				// Directional light direction
 				float4 light_dir = normalize(float4(_WorldSpaceLightPos0));
 
 				//depth texture depth
-				float4 depth_tex = tex2D(_CameraDepthTexture, i.uv);
-				float depth = LinearEyeDepth(depth_tex);
+				//float4 depth_tex = tex2D(_CameraDepthTexture, i.uv);
+
+
 
 				// Screenspace uv
-                float2 uv = ((i.uv - .5f) *2) * _ScreenParams.xy / _ScreenParams.y;
-                uv.x *= -1;
-                float2 screen_pos = uv * _FOV;
+                //float2 uv = ((i.uv - .5f) *2) * _ScreenParams.xy / _ScreenParams.y;
+                //uv.x *= -1;
+                //float2 screen_pos = uv * _FOV;
+
+				float2 sp = float4(i.screenPos.xy /  i.screenPos.w, 0,1);
+				float2 sp2 = (float4(i.screenPos.xy /  i.screenPos.w, 0,1) - 0.5 ) * 2;
+				float2 uv2 = sp2 ;
+				uv2.x *= -1;
+                float2 screen_pos2 = uv2 * _FOV * _ScreenParams.xy / _ScreenParams.y;
+				float2 screen_pos = screen_pos2;
+
+				float4 depth_tex = tex2D(_CameraDepthTexture, sp);
+				float depth = LinearEyeDepth(depth_tex);
+				//return depth / 10000;
 
                 ///// Raymarch Camera Parameters
                 float3 up = float3(0.0, 1.0, 0.0);
@@ -240,8 +257,10 @@
                 float3 cam_right = normalize(cross(dir, up ));
                 float3 cam_up = normalize(cross(cam_right, dir));
                 float3 p = normalize(cam_right * screen_pos.x + cam_up * screen_pos.y + dir);
-                
+				//return float4(p, 1);
 
+				//return float4(p,1) ;
+				//return float4(p,1);
                 //Jello transform
                 //Transform t = CreateTransform(_JelloScale, _JelloRotation * float4((_Time.x) / 14.0, (_Time.x % 1000.0) / 10.0, (_Time.x % 1000.0) / 18.0, 1.0), _JelloPosition);
                 Transform t = CreateTransform(_JelloScale, (_JelloRotation.xyzw), _JelloPosition);
@@ -256,6 +275,8 @@
 
                 //Raymarch for depth and color
                 float2 d = Raymarch(shapeMap, _CameraPosition, p, _BoundDistance);
+				//return d.x / _BoundDistance;
+				//return normalize(_CameraPosition);
 				//float3 shape_color = HSV2RGB(float3(d.y / 360.0, 1.0, 1.0));
 				float3 shape_color = _SDFColor; // HSV2RGB(float3(d.y / 360.0, 1.0, 1.0));
 
@@ -266,16 +287,16 @@
 
 				// Draw SDF shape if less than bounding volume
                 float draw = d.x < _BoundDistance;
-
+				//return draw;
 				float draw_core = core_d.x < _BoundDistance;
 
 				// sdf pixel world position
                 float4 world_pos = float4((_CameraPosition + d.x * p).xyz, 1.0f);
-
+				//return world_pos;
                 //Shape normals
                 //Gets normals in world space
                 float3 normal = GetNormal(shapeMap, world_pos);
-
+				//return float4(normal,1);
                 
                 //Jello Solid Lambertian lighting
 				float3 light_vec = light_dir;
@@ -307,11 +328,16 @@
                 core_color = ( core_color ) * (ilum_color);
                 color = (rim_intensity ? _RimColor : color) + saturate(specular_intensity * ilum_color);
 
-
+				
 				// Scene Image
-				float4 unity_cam = tex2D(_MainTex, i.uv);
-				float4 shifted_uv = float4(float2(ddx(d.x), ddy(d.x)) * _JelloDifraction + i.uv.xy, 0,0);
-				float4 shifted_cam =  tex2D(_MainTex, shifted_uv);
+				// float4 unity_cam = tex2D(_MainTex, i.uv);
+
+				float4 unity_cam = tex2D(_BackgroundTexture, sp);
+
+				//float4 shifted_uv = float4(float2(ddx(d.x), ddy(d.x)) * _JelloDifraction + i.uv.xy, 0,0);
+				float4 shifted_uv = float4(float2(ddx(d.x), ddy(d.x)) * _JelloDifraction + sp, 0,0);
+
+				float4 shifted_cam =  tex2D(_BackgroundTexture, shifted_uv);
 
 #ifdef _MODE_DEBUG //Draw Both scene and shapes
 
@@ -330,6 +356,8 @@
 				float4 shell_color = float4((shifted_cam.xyz + (max(color, 0) * draw)) / (1 + draw), 1);
 				float4 core_col = (max(draw_core * float4(core_color, 1), 0))  ;
 				float4 col = lerp(shell_color, core_col, draw_core);
+				//return lerp(unity_cam, col, d.x < depth.x);
+				
 				return lerp(unity_cam, col, d.x < depth.x);
 				
 #endif

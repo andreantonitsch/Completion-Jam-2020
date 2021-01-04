@@ -93,7 +93,7 @@ public class RaymarcherController : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         if (dirty_shape)
         {

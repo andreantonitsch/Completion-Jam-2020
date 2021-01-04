@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RaymarchTest
-  m_Shader: {fileID: 4800000, guid: da533218e2bf2b442bc3e9558a1aa270, type: 3}
+  m_Name: RayMarchObjects
+  m_Shader: {fileID: 4800000, guid: 1caf1908f9cd0924d81137e4ea7d5243, type: 3}
   m_ShaderKeywords: _MODE_CORE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -58,52 +58,38 @@ Material:
     m_Floats:
     - _BoundDistance: 10000
     - _BumpScale: 1
-    - _CoreRoundFactor: -0.06
-    - _CoreScale: 0.45
+    - _CoreScale: 0.5
     - _Cutoff: 0.5
-    - _Debug: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _JelloDifraction: 1
-    - _JelloRoundFactor: 0.3
-    - _LightIntensity: 0.8
+    - _LightIntensity: 4.85
     - _Metallic: 0
     - _Mode: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PlaneDistance: 1
-    - _RimThreshold: 0.22
+    - _RimThreshold: 0.23
     - _SmoothnessTextureChannel: 0
-    - _Specular: 200
+    - _Specular: 305.54
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Test: 50
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
-    - _CameraTarget: {r: -5.33, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CoreRoundFactor: {r: 0.05, g: 0.05, b: 0.05, a: 0.05}
-    - _DonutPosition: {r: 0, g: 0, b: 0, a: 0}
-    - _DonutRotation: {r: 200, g: 50.13, b: 20, a: 1}
-    - _DonutScale: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FOV: {r: 0.3666, g: 0.3666, b: 0.3667, a: 0.3667}
-    - _JelloPosition: {r: 22.52893, g: 7.7000003, b: -3.9779434, a: 0}
-    - _JelloRotation: {r: 1.2442416, g: 3.7353592, b: 3.086952, a: 0}
+    - _FOV: {r: 0.36666, g: 0.36666, b: -88.57, a: 0}
+    - _JelloPosition: {r: 1626.6187, g: -0.00007867424, b: -3759.772, a: 0}
+    - _JelloRotation: {r: 5.206164, g: 4.4959583, b: 2.5359356, a: 0}
     - _JelloRoundFactor: {r: 0, g: 0.2, b: 0.2, a: 0}
     - _JelloScale: {r: 1, g: 1, b: 1, a: 0}
-    - _JelloShape: {r: 1.0139512, g: -0.013951156, b: 0, a: 0}
-    - _LightPos: {r: -20.6, g: 34.7, b: -12.8, a: 0}
-    - _PlanePosition: {r: -2.1, g: 0.5, b: -0.72, a: 1}
-    - _RayDirection: {r: 1.68, g: 2.09, b: 0.12, a: 0}
-    - _RayOrigin: {r: 0, g: 0, b: -8.43, a: 1}
+    - _JelloShape: {r: 1.0004596, g: -0.00045951194, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SDF2Color: {r: 1.0139512, g: -0.000087738896, b: -0.013951156, a: 1}
-    - _SDFColor: {r: 0.7253611, g: 0.12851702, b: 0.103554726, a: 1}
+    - _SDF2Color: {r: 0.64333916, g: 0.04701558, b: 0.21158093, a: 1}
+    - _SDFColor: {r: 0.36082757, g: 0.12546858, b: 0.16069423, a: 2.0000002}
     - _ShapeSizes: {r: 0.5, g: 0.3, b: 0.7, a: 1}
   m_BuildTextureStacks: []
